@@ -203,10 +203,10 @@ class Client
   # @return [Job]
   def jobs(from=nil, to=nil, status=nil, conditions=nil)
     results = @api.list_jobs(from, to, status, conditions)
-    results.map {|job_id, type, status, query, start_at, end_at, cpu_time,
+    results.map {|job_id, type, status, query, created_at, start_at, end_at, cpu_time,
                  result_size, result_url, priority, retry_limit, org, db,
                  duration, num_records|
-      Job.new(self, job_id, type, query, status, nil, nil, start_at, end_at, cpu_time,
+      Job.new(self, job_id, type, query, status, nil, nil, created_at, start_at, end_at, cpu_time,
               result_size, nil, result_url, nil, priority, retry_limit, org, db,
               duration, num_records)
     }
@@ -216,9 +216,9 @@ class Client
   # @return [Job]
   def job(job_id)
     job_id = job_id.to_s
-    type, query, status, url, debug, start_at, end_at, cpu_time,
+    type, query, status, url, debug, created_at, start_at, end_at, cpu_time,
       result_size, result_url, hive_result_schema, priority, retry_limit, org, db, duration, num_records = @api.show_job(job_id)
-    Job.new(self, job_id, type, query, status, url, debug, start_at, end_at, cpu_time,
+    Job.new(self, job_id, type, query, status, url, debug, created_at, start_at, end_at, cpu_time,
             result_size, nil, result_url, hive_result_schema, priority, retry_limit, org, db, duration, num_records)
   end
 
@@ -418,10 +418,10 @@ class Client
   # @return [Array<ScheduledJob>]
   def history(name, from=nil, to=nil)
     result = @api.history(name, from, to)
-    result.map {|scheduled_at,job_id,type,status,query,start_at,end_at,result_url,priority,database|
+    result.map {|scheduled_at,job_id,type,status,query,created_at,start_at,end_at,result_url,priority,database|
       job_param = [job_id, type, query, status,
         nil, nil, # url, debug
-        start_at, end_at,
+        created_at, start_at, end_at,
         nil, # cpu_time
         nil, nil, # result_size, result
         result_url,

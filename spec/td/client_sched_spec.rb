@@ -46,7 +46,7 @@ describe 'Schedule Command' do
     end
 
     let :history do
-      ['history', 'scheduled_at', 'job_id', 'type', 'database', 'status', 'query', 'start_at', 'end_at', 'result', 'priority'].inject({}) { |r, e|
+      ['history', 'scheduled_at', 'job_id', 'type', 'database', 'status', 'query', 'created_at', 'start_at', 'end_at', 'result', 'priority'].inject({}) { |r, e|
         r[e] = e
         r
       }

@@ -84,12 +84,13 @@ module Schedule
       database = m['database']
       status = m['status']
       query = m['query']
+      created_at = m['created_at']
       start_at = m['start_at']
       end_at = m['end_at']
       scheduled_at = m['scheduled_at']
       result_url = m['result']
       priority = m['priority']
-      result << [scheduled_at, job_id, type, status, query, start_at, end_at, result_url, priority, database]
+      result << [scheduled_at, job_id, type, status, query, created_at, start_at, end_at, result_url, priority, database]
     }
     return result
   end

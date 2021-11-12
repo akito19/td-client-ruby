@@ -28,6 +28,7 @@ module Job
       database = m['database']
       status = m['status']
       query = m['query']
+      created_at = m['created_at']
       start_at = m['start_at']
       end_at = m['end_at']
       cpu_time = m['cpu_time']
@@ -37,7 +38,7 @@ module Job
       retry_limit = m['retry_limit']
       duration = m['duration']
       num_records = m['num_records']
-      result << [job_id, type, status, query, start_at, end_at, cpu_time,
+      result << [job_id, type, status, query, created_at, start_at, end_at, cpu_time,
                  result_size, result_url, priority, retry_limit, nil, database,
                  duration, num_records]
     }
@@ -60,6 +61,7 @@ module Job
     status = js['status']
     debug = js['debug']
     url = js['url']
+    created_at = js['created_at']
     start_at = js['start_at']
     end_at = js['end_at']
     cpu_time = js['cpu_time']
@@ -101,7 +103,7 @@ module Job
     end
     priority = js['priority']
     retry_limit = js['retry_limit']
-    return [type, query, status, url, debug, start_at, end_at, cpu_time,
+    return [type, query, status, url, debug, created_at, start_at, end_at, cpu_time,
             result_size, result, hive_result_schema, priority, retry_limit, nil, database, duration, num_records,
             linked_result_export_job_id, result_export_target_job_id]
   end

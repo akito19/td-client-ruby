@@ -84,7 +84,7 @@ describe 'Schedule API' do
 
   describe 'history' do
     let :history do
-      ['history', 'job_id', 'type', 'database', 'status', 'query', 'start_at', 'end_at', 'result', 'priority'].inject({}) { |r, e|
+      ['history', 'job_id', 'type', 'database', 'status', 'query', 'created_at', 'start_at', 'end_at', 'result', 'priority'].inject({}) { |r, e|
         r[e] = e
         r
       }
@@ -94,7 +94,7 @@ describe 'Schedule API' do
       stub_api_request(:get, "/v3/schedule/history/#{e(sched_name)}").
         with(:query => {'from' => 0, 'to' => 100}).
         to_return(:body => {'history' => [history]}.to_json)
-        expect(api.history(sched_name, 0, 100)).to eq([[nil, 'job_id', :type, 'status', 'query', 'start_at', 'end_at', 'result', 'priority', 'database']])
+        expect(api.history(sched_name, 0, 100)).to eq([[nil, 'job_id', :type, 'status', 'query', 'created_at', 'start_at', 'end_at', 'result', 'priority', 'database']])
     end
   end
 

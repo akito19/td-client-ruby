@@ -29,6 +29,7 @@ describe 'Command' do
         expect(job.type).to         eq raw_jobs[i]['type']
         expect(job.status).to       eq raw_jobs[i]['status']
         expect(job.query).to        eq raw_jobs[i]['query']
+        expect(job.created_at).to   eq Time.parse(raw_jobs[i]['created_at'])
         expect(job.start_at).to     eq Time.parse(raw_jobs[i]['start_at'])
         expect(job.end_at).to       eq Time.parse(raw_jobs[i]['end_at'])
         expect(job.cpu_time).to     eq raw_jobs[i]['cpu_time']

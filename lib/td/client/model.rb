@@ -391,6 +391,7 @@ class Job < Model
   # @param [Fixnum] status
   # @param [String] url
   # @param [Boolean] debug
+  # @param [String] created_at
   # @param [String] start_at
   # @param [String] end_at
   # @param [String] cpu_time
@@ -404,9 +405,9 @@ class Job < Model
   # @param [String] db_name
   # @param [Fixnum] duration
   # @param [Fixnum] num_records
-  def initialize(client, job_id, type, query, status=nil, url=nil, debug=nil, start_at=nil, end_at=nil, cpu_time=nil,
-                 result_size=nil, result=nil, result_url=nil, hive_result_schema=nil, priority=nil, retry_limit=nil,
-                 org_name=nil, db_name=nil, duration=nil, num_records=nil)
+  def initialize(client, job_id, type, query, status=nil, url=nil, debug=nil, created_at=nil, start_at=nil,
+                 end_at=nil, cpu_time=nil, result_size=nil, result=nil, result_url=nil, hive_result_schema=nil,
+                 priority=nil, retry_limit=nil, org_name=nil, db_name=nil, duration=nil, num_records=nil)
     super(client)
     @job_id = job_id
     @type = type
@@ -414,6 +415,7 @@ class Job < Model
     @query = query
     @status = status
     @debug = debug
+    @created_at = created_at
     @start_at = start_at
     @end_at = end_at
     @cpu_time = cpu_time
@@ -510,6 +512,12 @@ class Job < Model
   def debug
     update_status! unless @debug || !@auto_update_status || finished?
     @debug
+  end
+
+  # @return [Time, nil]
+  def created_at
+    update_status! unless @created_at || !@auto_update_status || finished?
+    @created_at && !@created_at.empty? ? Time.parse(@created_at) : nil
   end
 
   # @return [Time, nil]
@@ -628,13 +636,14 @@ class Job < Model
   end
 
   def update_status!
-    type, query, status, url, debug, start_at, end_at, cpu_time,
+    type, query, status, url, debug, created_at, start_at, end_at, cpu_time,
       result_size, result_url, hive_result_schema, priority, retry_limit,
       org_name, db_name , duration, num_records = @client.api.show_job(@job_id)
     @query = query
     @status = status
     @url = url
     @debug = debug
+    @created_at = created_at
     @start_at = start_at
     @end_at = end_at
     @cpu_time = cpu_time

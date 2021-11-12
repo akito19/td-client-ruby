@@ -23,7 +23,7 @@ describe 'Job Model' do
     let :arguments do
       job_attributes = raw_jobs.first
       [
-        'job_id', 'type', 'query', 'status', 'url', 'debug',
+        'job_id', 'type', 'query', 'status', 'url', 'debug', 'created_at',
         'start_at', 'end_at', 'cpu_time', 'result_size', 'result', 'result_url',
         'hive_result_schema', 'priority', 'retry_limit', 'org_name', 'db_name',
         'duration', 'num_records'
@@ -53,10 +53,11 @@ describe 'Job Model' do
 
     it 'calls API if auto_update_status=true' do
       job.auto_update_status = true
+      now = Time.now.round
       result_job = {
         'job_id' => job_id,
         'status' => 'queued',
-        'created_at' => Time.now,
+        'created_at' => now,
       }
       stub_request(:get, "https://api.treasuredata.com/v3/job/show/#{job_id}").
         to_return(:body => result_job.to_json)
@@ -64,6 +65,7 @@ describe 'Job Model' do
       expect(job.status).to eq "queued"
       expect(job.url).to be_nil
       expect(job.debug).to be_nil
+      expect(job.created_at).to eq now
       expect(job.start_at).to be_nil
       expect(job.end_at).to be_nil
       expect(job.cpu_time).to be_nil
@@ -77,6 +79,7 @@ describe 'Job Model' do
       expect(job.status).to be_nil
       expect(job.url).to be_nil
       expect(job.debug).to be_nil
+      expect(job.created_at).to be_nil
       expect(job.start_at).to be_nil
       expect(job.end_at).to be_nil
       expect(job.cpu_time).to be_nil

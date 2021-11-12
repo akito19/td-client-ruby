@@ -29,13 +29,14 @@ describe 'Job API' do
         stub_api_request(:get, "/v3/job/list", :query => {'from' => '0'}).to_return(:body => {'jobs' => raw_jobs}.to_json)
 
         jobs = api.list_jobs
-        jobs[i..i].map {|job_id, type, status, query, start_at, end_at, cpu_time,
+        jobs[i..i].map {|job_id, type, status, query, created_at, start_at, end_at, cpu_time,
                       result_size, result_url, priority, retry_limit, org, db,
                       duration, num_records, linked_result_export_job_id, result_export_target_job_id|
           expect(job_id).to eq(job['job_id'])
           expect(type).to eq(job['type'])
           expect(status).to eq(job['status'])
           expect(query).to eq(job['query'])
+          expect(created_at).to eq(job['created_at'])
           expect(start_at).to eq(job['start_at'])
           expect(end_at).to eq(job['end_at'])
           expect(cpu_time).to eq(job['cpu_time'])
@@ -76,13 +77,14 @@ describe 'Job API' do
         job = raw_jobs[i]
         stub_api_request(:get, "/v3/job/show/#{e(i)}").to_return(:body => job.to_json)
 
-        type, query, status, url, debug, start_at, end_at, cpu_time,
+        type, query, status, url, debug, created_at, start_at, end_at, cpu_time,
           result_size, result_url, hive_result_schema, priority, retry_limit, org, db, duration, num_records = api.show_job(i)
         expect(type).to eq(job['type'])
         expect(query).to eq(job['query'])
         expect(status).to eq(job['status'])
         expect(url).to eq(job['url'])
         expect(debug).to eq(job['debug'])
+        expect(created_at).to eq(job['created_at'])
         expect(start_at).to eq(job['start_at'])
         expect(end_at).to eq(job['end_at'])
         expect(cpu_time).to eq(job['cpu_time'])
