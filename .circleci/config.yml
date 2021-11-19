@@ -2,8 +2,8 @@ version: 2.1
 
 
 orbs:
-  ruby: circleci/ruby@1.1.2 
-  win: circleci/windows@2.4.0
+  ruby: circleci/ruby@1.2.0
+  win: circleci/windows@2.4.1
 
 
 commands:
@@ -43,32 +43,28 @@ jobs:
 
   ruby_25:
     docker:
-      - image: circleci/ruby:2.5.8-stretch
+      - image: cimg/ruby:2.5.9
     executor: ruby/default
     steps:
       - run-tests-flow
 
   ruby_26:
     docker:
-      - image: circleci/ruby:2.6.6-stretch
+      - image: cimg/ruby:2.6.8
     executor: ruby/default
     steps:
       - run-tests-flow
 
   ruby_27:
     machine:
-      image: ubuntu-1604:202004-01
+      image: cimg/ruby:2.7.4
     steps:
-      - ruby/install:
-          version: '2.7'
       - run-tests-flow
 
   ruby_30:
     machine:
-      image: ubuntu-1604:202004-01
+      image: cimg/ruby:3.0.2
     steps:
-      - ruby/install:
-          version: '3.0'
       - run-tests-flow
 
   win_ruby:
@@ -82,11 +78,11 @@ jobs:
           shell: powershell.exe
           command: gem install bundler
       - run-tests-flow
-  
+
   jruby_latest:
     docker:
       - image: circleci/jruby:latest
-    steps: 
+    steps:
       - run-tests-flow
 
 workflows:
