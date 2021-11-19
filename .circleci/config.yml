@@ -56,14 +56,14 @@ jobs:
       - run-tests-flow
 
   ruby_27:
-    machine:
+    docker:
       image: cimg/ruby:2.7.4
     executor: ruby/default
     steps:
       - run-tests-flow
 
   ruby_30:
-    machine:
+    docker:
       image: cimg/ruby:3.0.2
     executor: ruby/default
     steps:
