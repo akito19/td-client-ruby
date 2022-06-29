@@ -14,8 +14,8 @@ commands:
           name: "Install MSYS2"
           command: choco install msys2
       - run:
-          name: "ridk version"
-          command: ridk version
+          name: "ridk use list"
+          command: ridk use list
       - run:
           name: "Install Ruby devkit"
           command: ridk install 2 3
