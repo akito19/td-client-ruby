@@ -3,7 +3,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.7.1
-  win: circleci/windows@2.4.0
+  win: circleci/windows@4.1
 
 
 commands:
@@ -13,6 +13,9 @@ commands:
       - run:
           name: "Install MSYS2"
           command: choco install msys2
+      - run:
+          name: "ridk version"
+          command: ridk version
       - run:
           name: "Install Ruby devkit"
           command: ridk install 2 3
@@ -89,9 +92,9 @@ jobs:
 workflows:
   tests:
     jobs:
-      - ruby_26
-      - ruby_27
-      - ruby_30
-      - ruby_31
-      - jruby_latest
+      #- ruby_26
+      #- ruby_27
+      #- ruby_30
+      #- ruby_31
+      #- jruby_latest
       - win_ruby
