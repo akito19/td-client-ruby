@@ -58,7 +58,7 @@ describe 'API SSL connection' do
 
   def setup_server(ssl_version, port = 1000 + rand(1000))
     logger = Logger.new(STDERR)
-    logger.level = Logger::Severity::FATAL  # avoid logging SSLError (ERROR level)
+    logger.level = Logger::Severity::DEBUG  # avoid logging SSLError (ERROR level)
     @server = WEBrick::HTTPServer.new(
       :BindAddress => "localhost",
       :Logger => logger,
